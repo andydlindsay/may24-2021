@@ -23,6 +23,8 @@ const studentObj = {
   log: function() {}
 };
 
+// studentObj = {};
+
 console.log(studentObj);
 delete studentObj.log
 console.log(studentObj);

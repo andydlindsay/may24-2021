@@ -17,5 +17,6 @@ greeting = 'something else';
 console.log(greeting);
 
 // not primitives
+// objects are mutable (they can be changed)
 const arr = [];
 const obj = {};
