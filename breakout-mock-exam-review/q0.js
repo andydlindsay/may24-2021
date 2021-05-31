@@ -16,7 +16,9 @@
  *    9
  */
 const count = function(arr) {
-
+  const length = arr.length;
+  // console.log(length);
+  return length;
 };
 
 /* ===========================================================================
@@ -32,13 +34,26 @@ const count = function(arr) {
  *    36
  */
 const sum = function(arr) {
+  let total = 0;
+  
+  for (const element of arr) {
+    // console.log(element);
+    // total = total + element;
+    total += element;
+  }
 
+  return total;
 };
 
 // To be used by mean. Do not alter.
 const round = function(number) {
   return Math.round(number * 100) / 100;
 };
+
+// 3.1415
+// 314.15
+// 314
+// 3.14
 
 /* ===========================================================================
  * MEAN - the average value of numbers in a list
@@ -54,7 +69,16 @@ const round = function(number) {
  *    4
  */
 const mean = function(arr) {
+  if (arr.length === 0) {
+    return null;
+  }
 
+  // avg = sum / numOfElements
+  const avg = sum(arr) / count(arr);
+  const rounded = round(avg);
+  return rounded;
+
+  // return round(sum(arr) / count(arr));
 };
 
 // Don't change below:

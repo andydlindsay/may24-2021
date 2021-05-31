@@ -28,8 +28,46 @@ const round = function(number) {
   return Math.round(number * 100) / 100;
 };
 
-const stdev = function(arr) {
+const sum = function(arr) {
+  let total = 0;
+  
+  for (const element of arr) {
+    // console.log(element);
+    // total = total + element;
+    total += element;
+  }
 
+  return total;
+};
+
+const stdev = function(arr) {
+  // sqrt(sum((x - populationMean)^2) / numberOfValues)
+  const numberOfValues = arr.length;
+  const populationMean = sum(arr) / arr.length;
+
+  console.log('numberOfValues', numberOfValues);
+  console.log('populationMean', populationMean);
+  console.log('arr', arr);
+
+  const squares = [];
+  for (const element of arr) {
+    const xMinusMean = element - populationMean;
+    const squared = Math.pow(xMinusMean, 2);
+    squares.push(squared);
+    // console.log('squared', squared);
+  }
+
+  console.log('squares', squares);
+
+  const sumOfSquares = sum(squares);
+  console.log('sumOfSquares', sumOfSquares);
+
+  const avgSquare = sumOfSquares / numberOfValues;
+  console.log('avgSquare', avgSquare);
+
+  const squareRoot = Math.sqrt(avgSquare);
+
+  return round(squareRoot);
 };
 
 // Don't change below:
