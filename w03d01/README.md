@@ -2,8 +2,8 @@
 
 ### To Do
 - [x] Web Servers
-- [ ] Express
-- [ ] Middleware
+- [x] Express
+- [x] Middleware
 
 ### What is a web server?
 * an application running on someone else's computer
@@ -41,4 +41,5 @@ GET /urls
 * built on top of the persistent TCP connection
 * request => response
 
-
+### Middleware
+* software that sits between the request and the response
