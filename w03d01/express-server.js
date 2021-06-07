@@ -7,7 +7,6 @@ const app = express();
 // middleware
 // app.use((req, res, next) => {
 //   console.log(`first incoming request for ${req.method} ${req.url}`);
-
 //   // req.cookies = myFuncThatParsesCookies();
 //   // res.send('all done from inside the middleware');
 //   next();
