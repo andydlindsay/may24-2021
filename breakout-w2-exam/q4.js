@@ -27,7 +27,22 @@ Examples:
 */
 
 const minmax = function(list) {
+  // determine if we have an array of numbers or strings
+  const isString = typeof list[0] === 'string';
 
+  if (isString) {
+    // if strings, use .sort()
+    list.sort();
+  } else {
+    // if numbers, use .sort((a, b) => a - b);
+    list.sort((a, b) => a - b);
+  }
+
+  // grab the first element and last element and return them
+  const highest = list[list.length - 1];
+  const smallest = list[0];
+
+  return [smallest, highest];
 };
 
 // Don't change below:

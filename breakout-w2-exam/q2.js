@@ -18,7 +18,29 @@ Examples:
 */
 
 const countWhich = function(list, cb) {
+  // check if `list` is an array
+  if (!Array.isArray(list)) {
+    return false;
+  }
 
+  // var to hold our total
+  let total = 0;
+
+  // iterate through the list
+  for (const element of list) {
+    // call the callback on each element
+    const returnVal = cb(element);
+
+    // if callback returns truthy, increment total
+    if (returnVal) {
+      total += 1;
+    }
+  }
+
+  // return total
+  return total;
+
+  // return list.filter(cb).length;
 };
 
 // Don't change below:
