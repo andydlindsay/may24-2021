@@ -1,0 +1,17 @@
+<h1>All the articles</h1>
+<a href="/articles/new">Create a new article</a>
+
+<% for (const articleId in articles) { %>
+  <div class="article" style="border: 1px solid black;">
+    <a href="/articles/<%= articleId %>">
+      <h2>Title: <%= articles[articleId].title %></h2>
+    </a>
+    <h3>Author: <%= articles[articleId].author %></h3>
+    <p>Text: <%= articles[articleId].text %></p>
+    <img width="300" src="<%= articles[articleId].image %>" />
+
+    <form method="POST" action="/articles/<%= articleId %>/delete">
+      <button type="submit">Delete article</button>
+    </form>
+  </div>
+<% } %>
