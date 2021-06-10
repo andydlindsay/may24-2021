@@ -64,13 +64,6 @@
 * Selectors are always plural (eg. `/resources`, `/users`)
 * Actions are always singular (eg. `/login`, `/register`)
 
-### Express Alternatives
-- [Restify (JS)](http://restify.com/)
-- [Koa (JS)](https://koajs.com/)
-- [Hapi (JS)](https://hapi.dev/api/?v=19.0.5)
-- [Sinatra (Ruby)](http://sinatrarb.com/documentation.html)
-- [Django (Python)](https://www.djangoproject.com/)
-
 ### More HTTP Methods
 - We have more [*verbs*](https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods) available to us than just `GET` and `POST`
 - Popular ones are `PUT`, `PATCH`, and `DELETE`
@@ -89,33 +82,6 @@
   | POST | /resources | Create a new resource (Add) |
   | DELETE | /resources/:id | Delete an existing resource (Delete) |
 
-### Modular Routing
-- Store routes in multiple files to keep them organized
-- In Express, we need to use the Express.Router() method to give us back a **router** object
-- All routes will be added to this _router_ object
-- Finally, we export the _router_ object from the file to be imported into our Express server file (eg. `server.js`)
-
-  ```js
-  // post-router.js
-  const express = require('express');
-  const router = express.Router();
-
-  router.get('/', (req, res) => {
-    // typical route handler in here
-    res.send('hello world');
-  });
-
-  module.exports = router;
-
-  // server.js
-  const postRouter = require('./routes/post-router');
-  app.use('/posts', postRouter);
-  ```
-
-### JSON API's
-- So far, our servers have been returning server-side rendered templates, but our Express server can be configured to return different types of information including strings/objects (`res.send`), files (`res.sendFile`), and JSON (`res.json`)
-- JSON API's are concerned only with sending data (as opposed to HTML), so they are typically consumed with AJAX requests
-
 ### Useful Links
 * [Plain Text Offenders](https://github.com/plaintextoffenders/plaintextoffenders/blob/master/offenders.csv)
 * [How Does Encryption Work?](https://medium.com/searchencrypt/what-is-encryption-how-does-it-work-e8f20e340537)
@@ -123,7 +89,4 @@
 * [Asymmetric Cryptography](https://searchsecurity.techtarget.com/definition/asymmetric-cryptography)
 * [Client Session vs Server Session](http://www.rodsonluo.com/client-session-vs-server-session)
 * [Resource Naming](https://restfulapi.net/resource-naming/)
-* [Express Middleware](https://expressjs.com/en/guide/using-middleware.html)
 * [Method Override Package](https://www.npmjs.com/package/method-override)
-* [Express Response Object](http://expressjs.com/en/api.html#res)
-* [List of common Express middleware](https://expressjs.com/en/resources/middleware.html)
