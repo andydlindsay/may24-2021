@@ -2,6 +2,7 @@ const express = require('express');
 const morgan = require('morgan');
 const cookieParser = require('cookie-parser');
 const { v4: uuidv4 } = require('uuid');
+const bcrypt = require('bcryptjs');
 
 const app = express();
 const port = process.env.PORT || 6543;
@@ -22,7 +23,7 @@ const users = {
   'abcd': {
     id: 'abcd',
     email: 'jstamos@mail.com',
-    password: 'abc'
+    password: '$2a$10$rz2zC29B8N88StjCmD9N9OK3.tuogLrO3O34vIES0jPDOuNREXNo2'
   }
 };
 
@@ -104,18 +105,19 @@ app.post('/login', (req, res) => {
 
   // if there's no user with that email, send back an error response
   if (!foundUser) {
-    res.status(401).send('could not find user with that email');
+    return res.status(401).send('could not find user with that email');
   }
 
-  // compare the user's password
-  if (foundUser.password !== password) {
-    // if the passwords don't match, send back an error response
-    res.status(401).send('password is not correct');
-  }
+  bcrypt.compare(password, foundUser.password, (err, result) => {
+    if (!result) {
+      // if the passwords don't match, send back an error response
+      return res.status(401).send('password is not correct');
+    }
 
-  // set the cookie and redirect to the protected page
-  res.cookie('userId', foundUser.id);
-  res.redirect('/protected');
+    // set the cookie and redirect to the protected page
+    res.cookie('userId', foundUser.id);
+    res.redirect('/protected');
+  });
 });
 
 // POST /register
@@ -131,18 +133,22 @@ app.post('/register', (req, res) => {
   // create our new user object
   const newUserId = generateId();
 
-  const newUser = {
-    id: newUserId,
-    email,
-    password
-  }
+  bcrypt.genSalt(10, (err, salt) => {
+    bcrypt.hash(password, salt, (err, hash) => {
+      const newUser = {
+        id: newUserId,
+        email,
+        password: hash
+      };
 
-  // add our new user to the users object
-  users[newUserId] = newUser;
-  console.log(users);
+      // add our new user to the users object
+      users[newUserId] = newUser;
+      console.log(users);
 
-  // redirect the user to the login page
-  res.redirect('/login');
+      // redirect the user to the login page
+      res.redirect('/login');
+    });
+  });
 });
 
 // POST /logout
