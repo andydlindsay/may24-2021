@@ -1,8 +1,10 @@
 const express = require('express');
 const morgan = require('morgan');
-const cookieParser = require('cookie-parser');
+// const cookieParser = require('cookie-parser');
+const cookieSession = require('cookie-session');
 const { v4: uuidv4 } = require('uuid');
 const bcrypt = require('bcryptjs');
+const methodOverride = require('method-override');
 
 const app = express();
 const port = process.env.PORT || 6543;
@@ -12,8 +14,22 @@ const languages = require('./languages.json');
 app.set('view engine', 'ejs');
 
 app.use(morgan('dev'));
-app.use(cookieParser());
 app.use(express.urlencoded({ extended: false }));
+// app.use(cookieParser());
+app.use(cookieSession({
+  name: 'whateverWeWant',
+  keys: ['aouishefohbasodfhn', 'key2']
+}));
+app.use(methodOverride('_method'));
+
+app.use((req, res, next) => {
+  console.log(req.method); // POST
+  if (req.query._method) {
+    req.method = req.query._method;
+  }
+  console.log(req.method); // PATCH
+});
+
 
 const generateId = () => {
   return uuidv4().split('-')[1];
@@ -39,13 +55,15 @@ const urls = {
 app.get('/languages/:chosenLanguage', (req, res) => {
   const languagePref = req.params.chosenLanguage;
 
-  res.cookie('languagePref', languagePref);
+  // res.cookie('languagePref', languagePref);
+  req.session.languagePref = languagePref;
 
   res.redirect('/');
 });
 
 app.get('/about', (req, res) => {
-  const languagePref = req.cookies.languagePref || 'so';
+  // const languagePref = req.cookies.languagePref || 'so';
+  const languagePref = req.session.languagePref || 'so';
 
   const templateVars = {
     heading: languages.aboutHeadings[languagePref],
@@ -56,7 +74,8 @@ app.get('/about', (req, res) => {
 });
 
 app.get('/', (req, res) => {
-  const languagePref = req.cookies.languagePref || 'so';
+  // const languagePref = req.cookies.languagePref || 'so';
+  const languagePref = req.session.languagePref || 'so';
 
   const templateVars = {
     heading: languages.homeHeadings[languagePref],
@@ -78,7 +97,8 @@ app.get('/register', (req, res) => {
 
 // GET /protected
 app.get('/protected', (req, res) => {
-  const userId = req.cookies.userId;
+  // const userId = req.cookies.userId;
+  const userId = req.session.userId;
   if (!userId) {
     res.status(401).send('you are not authorized to be here');
   }
@@ -88,7 +108,7 @@ app.get('/protected', (req, res) => {
 });
 
 // POST /login
-app.post('/login', (req, res) => {
+app.patch('/login', (req, res) => {
   // pull the info off the body
   const email = req.body.email;
   const password = req.body.password;
@@ -115,7 +135,8 @@ app.post('/login', (req, res) => {
     }
 
     // set the cookie and redirect to the protected page
-    res.cookie('userId', foundUser.id);
+    // res.cookie('userId', foundUser.id);
+    req.session.userId = foundUser.id;
     res.redirect('/protected');
   });
 });
@@ -153,7 +174,8 @@ app.post('/register', (req, res) => {
 
 // POST /logout
 app.post('/logout', (req, res) => {
-  res.clearCookie('userId');
+  // res.clearCookie('userId');
+  req.session = null;
   res.redirect('/login');
 });
 
