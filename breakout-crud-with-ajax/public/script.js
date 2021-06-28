@@ -40,7 +40,6 @@ $(() => {
         });
     });
 
-
     const $deleteButton = $('<button>Delete</button>')
       .click(() => {
         $.post(`/products/${product.id}/delete`)
