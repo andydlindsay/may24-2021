@@ -8,12 +8,28 @@
 
   <link rel="stylesheet" href="/styles.css" />
 
+  <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+
+  <script src="/script.js"></script>
+
   <title>Welcome</title>
 </head>
 
 <body>
   <h1>Welcome to our site!</h1>
 
-  <h2>Check out the <a href="/products">products</a></h2>
+  <form id="new-product">
+    <label for="product-name">Product Name:</label>
+    <input name="productName" id="product-name" />
+    <br/>
+
+    <label for="price">Price:</label>
+    <input name="price" id="price" />
+    <br/>
+
+    <button type="submit">Create!</button>
+  </form>
+
+  <div id="product-list"></div>
 </body>
 </html>
