@@ -1,7 +1,8 @@
 import React, { useEffect } from 'react';
-import { announceResult } from '../helpers/helpers';
+import { announceResult, randomRobotSelector } from '../helpers/helpers';
 
 const Player = (props) => {
+
   const {playerSelection, compSelection, cheating} = props.state;
   const {setState} = props;
   const options = [
@@ -19,7 +20,7 @@ const Player = (props) => {
 
   useEffect(() => {
     if (playerSelection) {
-      const compSelection = 'Moai';
+      const compSelection = randomRobotSelector(playerSelection, cheating);
       setState(prevState => ({ ...prevState, compSelection }));
     }
   }, [playerSelection, cheating, setState]);

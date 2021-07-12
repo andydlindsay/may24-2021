@@ -25,3 +25,19 @@ export const genFeedbackMessage = (status) => {
   };
   return lookup[status];
 };
+
+export const randomRobotSelector = (playerSelection, cheating) => {
+  if (cheating) {
+    const winning = {
+      Axe: 'Moai',
+      Tree: 'Axe',
+      Moai: 'Tree',
+    };
+    return winning[playerSelection];
+  }
+
+  const options = ['Moai', 'Axe', 'Tree'];
+  const randomIndex = Math.floor(Math.random() * options.length);
+  return options[randomIndex];
+  // return 'Moai';
+};
