@@ -1,0 +1,14 @@
+<h1>All the Characters</h1>
+
+<%= link_to "Cities", cities_path %>
+
+<h2>Characters from: <%= @city.city %></h2>
+
+<% @characters.each do |character| %>
+  <div class="character" style="border: 1px solid pink;">
+    <h2>Class: <%= character.klass %></h2>
+    <h2>Race: <%= character.race %></h2>
+    <h2>Alignment: <%= character.alignment %></h2>
+    <h2>Home City: <%= character.city.city %></h2>
+  </div>
+<% end %>

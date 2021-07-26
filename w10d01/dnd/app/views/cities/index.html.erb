@@ -1,0 +1,8 @@
+<h1>All the cities</h1>
+
+<% @cities.each do |city| %>
+  <div class="city">
+    <h2>City: <%= city.city %></h2>
+    <%= link_to "Characters", city_characters_path(city) %>
+  </div>
+<% end %>
