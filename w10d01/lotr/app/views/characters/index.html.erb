@@ -1,0 +1,12 @@
+<h1>All the characters from <%= @location.location %>!</h1>
+
+<%= link_to "Locations", locations_path %>
+
+<% @characters.each do |character| %>
+  <div class="character" style="border: 1px solid pink;">
+    <h2>Name: <%= character.name %></h2>
+    <h2>Race: <%= character.race %></h2>
+    <h2>Poem: <%= character.poem %></h2>
+    <h2>Location: <%= character.location.location %></h2>
+  </div>
+<% end %>
